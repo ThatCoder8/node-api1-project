@@ -18,7 +18,7 @@ try {
         } else {
             const updatedUser =  await User.update(
                 req.params.id, 
-                req.params.body)
+                req.body)
             res.status(200).json(updatedUser)
         }
     }
@@ -31,12 +31,12 @@ try {
 } 
 })
 
-server.delete('/api/users/delete/:id', async (req, res) => {
+server.delete('/api/users/:id', async (req, res) => {
     try {
     const possibleUser = await User.findById(req.params.id)
     if (!possibleUser){
         res.status(404).json({
-            message: 'not found'
+            message: 'The user with the specified ID does not exist',
         })
     } else {
         const deletedUser = await User.remove(possibleUser.id)
